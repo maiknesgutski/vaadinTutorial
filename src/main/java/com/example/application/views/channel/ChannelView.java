@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * Kommentar für ein test
+ * Das ist ein weiterer Kommentar
  */
 @Route(value = "channel")
 public class ChannelView extends VerticalLayout implements HasUrlParameter<String> {
