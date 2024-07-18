@@ -17,6 +17,9 @@ import reactor.core.Disposable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Kommentar für ein test
+ */
 @Route(value = "channel")
 public class ChannelView extends VerticalLayout implements HasUrlParameter<String> {
 
