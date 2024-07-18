@@ -19,7 +19,7 @@ import reactor.core.Disposable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Route(value = "channel")
+@Route(value = "channel", layout = MainLayout.class)
 public class ChannelView extends VerticalLayout implements HasUrlParameter<String>, HasDynamicTitle {
 
     @Autowired
