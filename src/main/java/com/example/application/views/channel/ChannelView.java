@@ -2,6 +2,7 @@ package com.example.application.views.channel;
 
 import com.example.application.chat.ChatService;
 import com.example.application.chat.Message;
+import com.example.application.views.MainLayout;
 import com.example.application.views.lobby.LobbyView;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.messages.MessageInput;
@@ -9,6 +10,7 @@ import com.vaadin.flow.component.messages.MessageList;
 import com.vaadin.flow.component.messages.MessageListItem;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEvent;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,6 @@ import reactor.core.Disposable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Kommentar für ein test
- * Das ist ein weiterer Kommentar
- */
 @Route(value = "channel")
 public class ChannelView extends VerticalLayout implements HasUrlParameter<String> {
 
@@ -28,6 +26,7 @@ public class ChannelView extends VerticalLayout implements HasUrlParameter<Strin
     private ChatService chatService;
     private MessageList messageList;
     private String channelId;
+    private String channelName;
     private final List<Message> receivedMessages = new ArrayList<>();
 
     public ChannelView(ChatService chatService) {
@@ -47,11 +46,15 @@ public class ChannelView extends VerticalLayout implements HasUrlParameter<Strin
     public void setParameter(BeforeEvent event, String channelId) {
         if(chatService.channel(channelId).isEmpty()) {
             event.forwardTo(LobbyView.class);
-        } else {
-            this.channelId = channelId;
         }
+        this.channelName = chatService.channel(channelId).get().name();
+        this.channelId = channelId;
     }
 
+    @Override
+    public String getPageTitle() {
+        return channelName;
+    }
 
     private void sendMessage(String message) {
         if (!message.isBlank()) {
