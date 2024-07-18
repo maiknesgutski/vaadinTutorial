@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Route(value = "channel")
-public class ChannelView extends VerticalLayout implements HasUrlParameter<String> {
+public class ChannelView extends VerticalLayout implements HasUrlParameter<String>, HasDynamicTitle {
 
     @Autowired
     private ChatService chatService;
@@ -44,7 +44,7 @@ public class ChannelView extends VerticalLayout implements HasUrlParameter<Strin
 
     @Override
     public void setParameter(BeforeEvent event, String channelId) {
-        if(chatService.channel(channelId).isEmpty()) {
+        if (chatService.channel(channelId).isEmpty()) {
             event.forwardTo(LobbyView.class);
         }
         this.channelName = chatService.channel(channelId).get().name();
@@ -88,7 +88,7 @@ public class ChannelView extends VerticalLayout implements HasUrlParameter<Strin
                 .subscribe(this::receiveMessage);
     }
 
-    protected void onAttach(AttachEvent attachEvent){
+    protected void onAttach(AttachEvent attachEvent) {
         var subscription = subscribe();
         addDetachListener(detachEvent -> subscription.dispose());
     }
